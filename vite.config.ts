@@ -3,7 +3,7 @@ import replace from '@rollup/plugin-replace';
 
 export default defineConfig({
   build: {
-    outDir: 'dist',
+    outDir: 'docs',
     rollupOptions: {
       plugins: [
         //  Toggle the booleans here to enable / disable Phaser 3 features:
