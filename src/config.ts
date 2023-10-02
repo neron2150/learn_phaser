@@ -1,13 +1,17 @@
-import Phaser from 'phaser';
+import Phaser from "phaser";
+import Game from "./scenes/Game";
+import GameOver from "./scenes/GameOver";
 
 export default {
   type: Phaser.AUTO,
-  parent: 'game',
-  backgroundColor: '#33A5E7',
-  scale: {
-    width: 800,
-    height: 600,
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH
+  width: window.innerWidth,
+  height: window.innerHeight,
+  scene: [Game, GameOver],
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { y: 200 },
+      debug: false
+    }
   }
 };
