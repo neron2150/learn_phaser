@@ -10,6 +10,7 @@ export default class Game extends Scene {
   carrots?: Phaser.Physics.Arcade.Group;
   carrotsCollected = 0;
   carrotsCollectedText?: GameObjects.Text;
+  gameSpeed = 1;
   preload() {
     this.load.image("background", "assets/bg_layer1.png");
     this.load.image("platform", "assets/ground_grass.png");
@@ -22,6 +23,7 @@ export default class Game extends Scene {
   }
   init() {
     this.carrotsCollected = 0;
+    this.gameSpeed = 1;
   }
   create() {
     this.add.image(240, 320, "background").setScrollFactor(1, 0);
@@ -55,7 +57,7 @@ export default class Game extends Scene {
       this.handleCollectCarrot, // called on overlap
       this
     );
-    const style = { color: "#000", fontSize: "24px" };
+    const style = { color: "#FFF", fontSize: "24px" };
     this.carrotsCollectedText = this.add
       .text(240, 10, "Carrots: 0", style)
       .setScrollFactor(0)
@@ -82,9 +84,16 @@ export default class Game extends Scene {
     const touchingDown = this.player?.body.touching.down;
     const currentVelocity = this.player?.body.velocity.x || 0;
     if (touchingDown) {
-      this.player?.setVelocityY(-300 - Math.abs(currentVelocity) / 10);
+      this.gameSpeed += 5;
+      this.player?.setVelocityY(
+        -300 - this.gameSpeed - Math.abs(currentVelocity) / 10
+      );
+
+      console.log(`${this.player?.body.velocity.y}`);
       this.player?.setTexture("bunny-jump");
       this.sound.play("jump");
+      this.physics.world.gravity.y = 200 + this.gameSpeed;
+      console.log(this.physics.world.gravity.y);
     }
     const vy = this.player?.body.velocity.y ?? 0;
     if (vy > 0 && this.player?.texture.key !== "bunny-stand") {
