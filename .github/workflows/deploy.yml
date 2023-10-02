@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Замените "main" на вашу основную ветку
+      - master  # Замените "main" на вашу основную ветку
 
 jobs:
   deploy:
