@@ -57,7 +57,7 @@ export default class Game extends Scene {
       this.handleCollectCarrot, // called on overlap
       this
     );
-    const style = { color: "#FFF", fontSize: "24px" };
+    const style = { color: "#FFF", fontSize: "25px" };
     this.carrotsCollectedText = this.add
       .text(240, 10, "Carrots: 0", style)
       .setScrollFactor(0)
