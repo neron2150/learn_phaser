@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master # Замените на имя вашей основной ветки
+      - main # Замените на имя вашей основной ветки
 
 jobs:
   build-and-deploy:
@@ -17,6 +17,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14
+
+      - name: Install Yarn
+        run: npm install -g yarn
 
       - name: Install Dependencies
         run: yarn install
