@@ -19,10 +19,10 @@ jobs:
           node-version: 14
 
       - name: Install Dependencies
-        run: npm install
+        run: yarn install
 
       - name: Build
-        run: npm run build # Замените эту команду, если у вас другая команда для сборки проекта
+        run: yarn build # Замените эту команду, если у вас другая команда для сборки проекта
 
       - name: Deploy to GitHub Pages
         run: |
