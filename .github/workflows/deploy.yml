@@ -25,7 +25,17 @@ jobs:
         run: yarn build  # Замените на `npm run build`, если вы используете npm
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # Путь к вашей папке с билдом
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git checkout --orphan gh-pages
+          git rm -rf .
+          mv ./dist/* .
+          git add .
+          git commit -m "Deploy to GitHub Pages"
+          git push -f origin gh-pages
+
+      - name: Clean up
+        run: |
+          git checkout master
+          git branch -D gh-pages
