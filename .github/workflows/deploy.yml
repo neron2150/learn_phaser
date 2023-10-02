@@ -3,40 +3,29 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # Замените на имя вашей основной ветки
+      - main  # Замените "main" на вашу основную ветку
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14
-
-      - name: Install Yarn
-        run: npm install -g yarn
+          node-version: 14  # Выберите версию Node.js, которую используете в вашем проекте
 
       - name: Install Dependencies
-        run: yarn install
+        run: yarn install  # Используйте `npm install`, если вы предпочитаете npm
 
       - name: Build
-        run: yarn build # Замените эту команду, если у вас другая команда для сборки проекта
+        run: yarn build  # Замените на `npm run build`, если вы используете npm
 
       - name: Deploy to GitHub Pages
-        run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git checkout --orphan gh-pages
-          git rm -rf .
-          mv dist /tmp/dist
-          mv /tmp/dist/* .
-          git add -A
-          git commit -m "Deploy to GitHub Pages"
-          git branch -D main
-          git branch -m main
-          git push -f origin main
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist  # Путь к вашей папке с билдом
